@@ -1,0 +1,875 @@
+basePath: /
+definitions:
+  dto.CommonResp:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+      success:
+        type: boolean
+    type: object
+  dto.Domain:
+    properties:
+      description:
+        type: string
+      domain_id:
+        type: string
+      name:
+        type: string
+    type: object
+  dto.DomainCreateReq:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    required:
+    - description
+    - name
+    type: object
+  dto.DomainCreateResp:
+    type: object
+  dto.DomainDeleteResp:
+    type: object
+  dto.DomainDetailQueryResp:
+    properties:
+      description:
+        type: string
+      domain_id:
+        type: string
+      name:
+        type: string
+    type: object
+  dto.DomainListQueryResp:
+    properties:
+      domains:
+        items:
+          $ref: '#/definitions/dto.Domain'
+        type: array
+      page:
+        type: integer
+      size:
+        type: integer
+      total:
+        type: integer
+    type: object
+  dto.DomainUpdateReq:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    type: object
+  dto.DomainUpdateResp:
+    type: object
+  dto.LoginReq:
+    properties:
+      password:
+        maxLength: 128
+        type: string
+      username:
+        maxLength: 64
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  dto.LoginResp:
+    properties:
+      access_token:
+        type: string
+      expires_at:
+        type: integer
+    type: object
+  dto.LogoutReq:
+    type: object
+  dto.LogoutResp:
+    type: object
+  dto.PermissionCreateReq:
+    properties:
+      action:
+        type: string
+      effect:
+        $ref: '#/definitions/dto.PermissionEffect'
+      resource_id:
+        type: string
+      status:
+        $ref: '#/definitions/dto.PermissionStatus'
+    required:
+    - action
+    - effect
+    - resource_id
+    - status
+    type: object
+  dto.PermissionCreateResp:
+    type: object
+  dto.PermissionEffect:
+    enum:
+    - 1
+    - 2
+    type: integer
+    x-enum-varnames:
+    - PermissionEffectAllow
+    - PermissionEffectDeny
+  dto.PermissionStatus:
+    enum:
+    - 1
+    - 2
+    type: integer
+    x-enum-varnames:
+    - PermissionStatusValid
+    - PermissionStatusInvalid
+  dto.Resource:
+    properties:
+      description:
+        type: string
+      domain_id:
+        type: string
+      name:
+        type: string
+      resource_id:
+        type: string
+      status:
+        $ref: '#/definitions/dto.ResourceStatus'
+    type: object
+  dto.ResourceCreateReq:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      status:
+        $ref: '#/definitions/dto.ResourceStatus'
+    required:
+    - name
+    - status
+    type: object
+  dto.ResourceCreateResp:
+    type: object
+  dto.ResourceDeleteResp:
+    type: object
+  dto.ResourceDetailQueryResp:
+    properties:
+      description:
+        type: string
+      domain_id:
+        type: string
+      name:
+        type: string
+      resource_id:
+        type: string
+      status:
+        $ref: '#/definitions/dto.ResourceStatus'
+    type: object
+  dto.ResourceListQueryResp:
+    properties:
+      page:
+        type: integer
+      resources:
+        items:
+          $ref: '#/definitions/dto.Resource'
+        type: array
+      size:
+        type: integer
+      total:
+        type: integer
+    type: object
+  dto.ResourceStatus:
+    enum:
+    - 1
+    - 2
+    type: integer
+    x-enum-varnames:
+    - ResourceStatusValid
+    - ResourceStatusInvalid
+  dto.ResourceUpdateReq:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      status:
+        $ref: '#/definitions/dto.ResourceStatus'
+    type: object
+  dto.ResourceUpdateResp:
+    type: object
+  dto.Role:
+    description: 角色的详细信息
+    properties:
+      description:
+        type: string
+      domain_id:
+        type: string
+      name:
+        type: string
+      parent_id:
+        type: string
+      role_id:
+        type: string
+      status:
+        allOf:
+        - $ref: '#/definitions/dto.RoleStatus'
+        description: |-
+          Status 角色状态
+          @Description 角色的状态，可以是以下值：
+          - 1: 角色有效
+          - 2: 角色无效
+    type: object
+  dto.RoleCreateReq:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      parent_id:
+        type: string
+      status:
+        $ref: '#/definitions/dto.RoleStatus'
+    required:
+    - name
+    - status
+    type: object
+  dto.RoleCreateResp:
+    type: object
+  dto.RoleDeleteResp:
+    type: object
+  dto.RoleDetailQueryResp:
+    properties:
+      description:
+        type: string
+      domain_id:
+        type: string
+      name:
+        type: string
+      parent_id:
+        type: string
+      role_id:
+        type: string
+      status:
+        allOf:
+        - $ref: '#/definitions/dto.RoleStatus'
+        description: |-
+          Status 角色状态
+          @Description 角色的状态，可以是以下值：
+          - 1: 角色有效
+          - 2: 角色无效
+    type: object
+  dto.RoleListQueryResp:
+    properties:
+      page:
+        type: integer
+      roles:
+        items:
+          $ref: '#/definitions/dto.Role'
+        type: array
+      size:
+        type: integer
+      total:
+        type: integer
+    type: object
+  dto.RoleStatus:
+    description: 角色的状态
+    enum:
+    - 1
+    - 2
+    type: integer
+    x-enum-varnames:
+    - RoleStatusValid
+    - RoleStatusInvalid
+  dto.RoleUpdateReq:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      status:
+        $ref: '#/definitions/dto.RoleStatus'
+    type: object
+  dto.RoleUpdateResp:
+    type: object
+info:
+  contact: {}
+  description: auth system
+  title: AuthSystem
+  version: "1.0"
+paths:
+  /api/v1/account/login:
+    post:
+      consumes:
+      - application/json
+      description: 用户登录接口
+      parameters:
+      - description: login request body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            set-cookie:
+              description: cookie
+              type: string
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.LoginResp'
+              type: object
+      summary: 用户登录接口
+      tags:
+      - account
+  /api/v1/account/logout:
+    post:
+      consumes:
+      - application/json
+      description: 用户登出接口
+      parameters:
+      - description: logout request body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LogoutReq'
+      - description: Bearer jwt
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            set-cookie:
+              description: cookie
+              type: string
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.LogoutResp'
+              type: object
+      summary: 用户登出接口
+      tags:
+      - account
+  /api/v1/domain/create:
+    post:
+      consumes:
+      - application/json
+      description: 创建作用域
+      parameters:
+      - description: create domain request body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/dto.DomainCreateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.DomainCreateResp'
+              type: object
+      summary: 创建作用域
+      tags:
+      - domain
+  /api/v1/domain/create_resource:
+    post:
+      consumes:
+      - application/json
+      description: 创建资源
+      parameters:
+      - description: create resource under domain
+        in: query
+        name: domain_id
+        required: true
+        type: string
+      - description: create resource request body
+        in: body
+        name: resource
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ResourceCreateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ResourceCreateResp'
+              type: object
+      summary: 创建资源
+      tags:
+      - domain
+  /api/v1/domain/create_role:
+    post:
+      consumes:
+      - application/json
+      description: 创建角色
+      parameters:
+      - description: create role under domain
+        in: query
+        name: domain_id
+        required: true
+        type: string
+      - description: create role
+        in: body
+        name: role
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RoleCreateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.RoleCreateResp'
+              type: object
+      summary: 创建角色
+      tags:
+      - domain
+  /api/v1/domain/delete/:
+    post:
+      consumes:
+      - application/json
+      description: 删除作用域
+      parameters:
+      - description: delete domain request body
+        in: query
+        name: domain_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.DomainDeleteResp'
+              type: object
+      summary: 删除作用域
+      tags:
+      - domain
+  /api/v1/domain/list:
+    get:
+      consumes:
+      - application/json
+      description: 查询作用域列表
+      parameters:
+      - in: query
+        name: page
+        required: true
+        type: integer
+      - in: query
+        name: size
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.DomainListQueryResp'
+              type: object
+      summary: 查询作用域列表
+      tags:
+      - domain
+  /api/v1/domain/query:
+    get:
+      consumes:
+      - application/json
+      description: 查询作用域详情
+      parameters:
+      - in: query
+        name: domainID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.DomainDetailQueryResp'
+              type: object
+      summary: 查询作用域详情
+      tags:
+      - domain
+  /api/v1/domain/query_resource:
+    get:
+      consumes:
+      - application/json
+      description: 查询资源列表
+      parameters:
+      - in: query
+        name: domainID
+        required: true
+        type: string
+      - in: query
+        name: name
+        type: string
+      - in: query
+        name: page
+        required: true
+        type: integer
+      - in: query
+        name: size
+        required: true
+        type: integer
+      - enum:
+        - 1
+        - 2
+        in: query
+        name: status
+        type: integer
+        x-enum-varnames:
+        - ResourceStatusValid
+        - ResourceStatusInvalid
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ResourceListQueryResp'
+              type: object
+      summary: 查询资源列表
+      tags:
+      - domain
+  /api/v1/domain/query_role:
+    get:
+      consumes:
+      - application/json
+      description: 查询角色列表
+      parameters:
+      - in: query
+        name: domainID
+        required: true
+        type: string
+      - in: query
+        name: name
+        type: string
+      - in: query
+        name: page
+        required: true
+        type: integer
+      - in: query
+        name: size
+        required: true
+        type: integer
+      - description: 角色的状态
+        enum:
+        - 1
+        - 2
+        in: query
+        name: status
+        type: integer
+        x-enum-varnames:
+        - RoleStatusValid
+        - RoleStatusInvalid
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.RoleListQueryResp'
+              type: object
+      summary: 查询角色列表
+      tags:
+      - domain
+  /api/v1/domain/update:
+    post:
+      consumes:
+      - application/json
+      description: 更新作用域
+      parameters:
+      - description: update domain request body
+        in: query
+        name: domain_id
+        required: true
+        type: string
+      - description: update domain request body
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/dto.DomainUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.DomainUpdateResp'
+              type: object
+      summary: 更新作用域
+      tags:
+      - domain
+  /api/v1/permission/create:
+    post:
+      consumes:
+      - application/json
+      description: 创建权限
+      parameters:
+      - description: create permission request body
+        in: body
+        name: permission
+        required: true
+        schema:
+          $ref: '#/definitions/dto.PermissionCreateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.PermissionCreateResp'
+              type: object
+      summary: 创建权限
+      tags:
+      - permission
+  /api/v1/resource/delete:
+    post:
+      consumes:
+      - application/json
+      description: 删除资源
+      parameters:
+      - description: delete resource
+        in: query
+        name: resource_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ResourceDeleteResp'
+              type: object
+      summary: 删除资源
+      tags:
+      - resource
+  /api/v1/resource/query:
+    get:
+      consumes:
+      - application/json
+      description: 查询资源详情
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ResourceDetailQueryResp'
+              type: object
+      summary: 查询资源详情
+      tags:
+      - resource
+  /api/v1/resource/update:
+    post:
+      consumes:
+      - application/json
+      description: 更新资源
+      parameters:
+      - description: delete resource request body
+        in: query
+        name: resource_id
+        required: true
+        type: string
+      - description: update resource request body
+        in: body
+        name: resource
+        required: true
+        schema:
+          $ref: '#/definitions/dto.ResourceUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.ResourceUpdateResp'
+              type: object
+      summary: 更新资源
+      tags:
+      - resource
+  /api/v1/role/delete:
+    post:
+      consumes:
+      - application/json
+      description: 删除角色
+      parameters:
+      - description: delete role
+        in: query
+        name: role_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.RoleDeleteResp'
+              type: object
+      summary: 删除角色
+      tags:
+      - role
+  /api/v1/role/query:
+    get:
+      consumes:
+      - application/json
+      description: 查询角色详情
+      parameters:
+      - in: query
+        name: roleID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.RoleDetailQueryResp'
+              type: object
+      summary: 查询角色详情
+      tags:
+      - role
+  /api/v1/role/update:
+    post:
+      consumes:
+      - application/json
+      description: 更新角色
+      parameters:
+      - description: update role
+        in: query
+        name: role_id
+        required: true
+        type: string
+      - description: update role
+        in: body
+        name: role
+        required: true
+        schema:
+          $ref: '#/definitions/dto.RoleUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.RoleUpdateResp'
+              type: object
+      summary: 更新角色
+      tags:
+      - role
+  /api/v1/user/info:
+    get:
+      consumes:
+      - application/json
+      description: 用户
+      parameters:
+      - description: Bearer jwt
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/dto.CommonResp'
+            - properties:
+                data:
+                  $ref: '#/definitions/dto.LogoutResp'
+              type: object
+      summary: 用户
+      tags:
+      - user
+schemes:
+- http
+swagger: "2.0"
